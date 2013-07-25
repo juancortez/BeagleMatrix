@@ -1,6 +1,6 @@
 /***************************BeagleMatrix.js***************************************
 * Created on: 7-11-2013
-* Revised on: 7-22-2013
+* Revised on: 7-25-2013
 * Author: Juan Cortez
 * 8x8 Bi-Color LED Matrix (http://www.adafruit.com/products/902)
 * Analog 2-axis thumb joystick(http://www.adafruit.com/products/512)
@@ -152,7 +152,6 @@ function checkEnemy(){
     var red = wire.readBytes((posy*2)+1,2);
     var green = wire.readBytes(posy*2,2);
     if(red[0] === green[0]){
-        console.log("\n********Game Over********");
         b.readTextFile(highScore,printScore);  
    }
 } 
@@ -178,7 +177,7 @@ Checks the bounds of the game and moves cursor from quadrant to quadrant.
                      | - - - | - - -  |
                      |   Q2  |  Q3    |
                        ----------------   
- *************************************************************************/
+*************************************************************************/
 function checkBounds(){
     if(posx >7 && wire.address === 112){
          wire = new i2c(address[1], {device: '/dev/i2c-1'}); // Q0 to Q1 
@@ -276,12 +275,13 @@ return location;
 // Randomly spawns 8 red blocks on the 8x8 matrix
 function spawnEnemies(){
     for(var i=0;i<enemies;i++){
-enemyX[i]=Math.floor((Math.random()*7)+1);
-enemyY[i]=i;
-if(enemyX[i] == posx && enemyY[i] == posy){
+enemyX=Math.floor((Math.random()*7)+1);
+enemyY=i;
+   
+ if(enemyX == posx && enemyY == posy){
  spawnEnemies();   
 }
-wire.writeBytes((enemyY[i]*2)+1, [Math.pow(2,enemyX[i])]);
+wire.writeBytes((enemyY*2)+1, [Math.pow(2,enemyX)]);
     }
 }
     
@@ -299,10 +299,11 @@ wire.writeBytes(posy*2, [Math.pow(2,posx)]);
 function printScore(x){
  var score=0;
  score = x.data;
+  console.log("\n********Game Over********");
  console.log("All-Time High Score: " + score);
- console.log("Your Current Score: " + points);
+ console.log("Tommy, Your Current Score: " + points);
  if (points > score){
-  console.log("You have the new all time score with " + points + " points!"); 
+  console.log("Tommy! You have the new all time score with " + points + " points!"); 
   b.writeTextFile(highScore, points);
   console.log("\n*************************");
      process.exit(1);
