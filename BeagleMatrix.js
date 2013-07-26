@@ -16,7 +16,7 @@ var i2c = require('i2c');
 var address = [0x70,0x71,0x72,0x73]; // Addresses of the 8x8 Bi-Color Matrices
 var b = require('bonescript');
 var highScore = '/media/BEAGLEBONE/highscore.txt';
-//b.writeTextFile(highScore, 0);                     // Create the text file (ONLY RUN THIS ONCE) 
+b.writeTextFile(highScore, 0);                     // Create the text file (ONLY RUN THIS ONCE) 
 
 // Global Variables used throughout program
 var posx=0;
@@ -301,9 +301,9 @@ function printScore(x){
  score = x.data;
   console.log("\n********Game Over********");
  console.log("All-Time High Score: " + score);
- console.log("Tommy, Your Current Score: " + points);
+ console.log("Your Current Score: " + points);
  if (points > score){
-  console.log("Tommy! You have the new all time score with " + points + " points!"); 
+  console.log("You have the new all time score with " + points + " points!"); 
   b.writeTextFile(highScore, points);
   console.log("\n*************************");
      process.exit(1);
