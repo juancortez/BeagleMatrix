@@ -22,23 +22,29 @@ var brightness = brightnessArray[7];                    // Brightness level from
  
 /* Main Program */
 setup();                                                // Sets up all the 8x8 Matrices
-var green = {};  
-var red = [0x7E,0x7E,0x18,0x18,0x18,0x18,0x18,0x58];   
-var wire = new i2c(address[0], {device: '/dev/i2c-1'}); // Points to the i2c address
-writeLED();                                             // T. Initial
-var green = [0x38,0x3C,0x26,0x06,0x76,0x66,0x3C,0xB0];  
-var red = {};   
-var wire = new i2c(address[1], {device: '/dev/i2c-1'}); // Points to the i2c address
-writeLED();                                             // G. Initial
-var green = {}; 
-var red = [0x7E,0x7E,0x18,0x18,0x18,0x18,0x7E,0xFE];   
-var wire = new i2c(address[2], {device: '/dev/i2c-1'}); // Points to the i2c address
-writeLED();                                             // I. Initial
-var green = [0x60,0x60,0x60,0x60,0x64,0x6C,0x7C,0xB8];  
-var red = [0x60,0x60,0x60,0x60,0x64,0x6C,0x7C,0xB8];     
-var wire = new i2c(address[3], {device: '/dev/i2c-1'}); // Points to the i2c address
-writeLED();                                             // J. Initial 
- 
+for(var i=0;i<4;i++){
+    var wire = new i2c(address[i], {device: '/dev/i2c-1'}); // Points to the i2c address
+    switch(i){
+     case 0: var green = {};        
+             var red = [0x7E,0x7E,0x18,0x18,0x18,0x18,0x18,0x58]; 
+             writeLED();                                           // T. Initial
+             break;
+     case 1: var green = [0x38,0x3C,0x26,0x06,0x76,0x66,0x3C,0xB0];  
+             var red = {};   
+             writeLED();                                           // G. Initial
+             break;
+     case 2: var green = {}; 
+             var red = [0x7E,0x7E,0x18,0x18,0x18,0x18,0x7E,0xFE];  
+             writeLED();                                           // I. Initial
+             break;
+     case 3: var green = [0x60,0x60,0x60,0x60,0x64,0x6C,0x7C,0xB8];  
+             var red = [0x60,0x60,0x60,0x60,0x64,0x6C,0x7C,0xB8];  
+             writeLED();                                           // J. Initial
+             break;
+    default: break;
+    }
+    
+}
 //Setup and turn on the 8x8 Bi-Color LED Matrices
 function setup(){    
  for(var i=0; i<4; i++){
